@@ -4,9 +4,26 @@ from tensorflow.keras.metrics import Mean, BinaryAccuracy
 
 class DCGAN(tf.keras.Model):
     """
+    Subclass of Keras' `Model` implementing a deep convolutional generative
+    adversarial network (DCGAN). The training step simultaneously trains the
+    discriminator and the generator (although in an independent way).
     """
     def __init__(self, discriminator, generator, latent_dim, noise_param=0.1):
         """
+        Class constructor.
+
+        Parameters
+        ----------
+        discriminator : tf.keras.Model
+            Discriminator model.
+        generator : tf.keras.Model
+            Generator model.
+        latent_dim : int
+            Number of dimensions of the latent space (i.e. one vector in
+            latent space has shape (latent_dim,)).
+        noise_param : float, optional (default: 0.1)
+            Coefficient for the random (uniform) noise added to the class
+            labels to train the discriminator.
         """
         super().__init__()
 
@@ -17,6 +34,8 @@ class DCGAN(tf.keras.Model):
 
     def compile(self, d_optimizer, g_optimizer):
         """
+        Compile method for the DCGAN model: sets the input optimizers as
+        instance attributes and instantiates the metrics.
         """
         super().compile()
 
